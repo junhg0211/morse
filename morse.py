@@ -39,7 +39,7 @@ table = {
     '9': '----.',
     '0': '-----',
     ' ': '/',
-    ',': '..-..',
+    ',': '--..--',
     '.': '.-.-.-',
     '?': '..--..',
     '!': '-.-.--',
@@ -50,6 +50,8 @@ table = {
     '-': '-....-',
     '=': '-...-'
 }
+
+reverse_table = {v: k for k, v in table.items()}
 
 
 def generate(string: str):
@@ -70,6 +72,15 @@ def generate(string: str):
 
         if not overline:
             result += ' '
+    return result
+
+
+def convert(morse: str):
+    letters = morse.split(' ')
+    result = ''
+    for letter in letters:
+        result += reverse_table.get(letter, ' ')
+
     return result
 
 
@@ -133,6 +144,10 @@ def play_morse(string: str, wpm: int = WPM):
 
 
 if __name__ == '__main__':
+    '''
     message = '`bt`'
     print(generate(message))
     play_morse(message, 20)
+    '''
+
+    print(convert('.... . .-.. .-.. --- --..-- / .-- --- .-. .-.. -.. -.-.--'))
