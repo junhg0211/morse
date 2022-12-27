@@ -55,9 +55,21 @@ table = {
 def generate(string: str):
     string = string.lower()
     result = ''
+    overline = False
+
     for letter in string:
+        if letter == '`':
+            if overline:
+                overline = False
+                result += ' '
+            else:
+                overline = True
+            continue
+
         result += table[letter]
-        result += ' '
+
+        if not overline:
+            result += ' '
     return result
 
 
@@ -121,6 +133,6 @@ def play_morse(string: str, wpm: int = WPM):
 
 
 if __name__ == '__main__':
-    message = 'S'
+    message = '`bt`'
     print(generate(message))
-    play_morse(message, 30)
+    play_morse(message, 20)
