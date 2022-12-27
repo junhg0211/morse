@@ -107,11 +107,11 @@ def generate_silence(duration: float, sampling_rate: int = SAMPLING_RATE):
     return samples.tobytes()
 
 
-def write_audio(stream, string: str, unit: float, function=None):
+def write_audio(stream, morse: str, unit: float, function=None):
     if function is None:
         function = stream.write
 
-    for letter in generate(string):
+    for letter in morse:
         if letter == '.':
             function(generate_sin(unit))
         elif letter == '-':
@@ -126,7 +126,7 @@ def write_audio(stream, string: str, unit: float, function=None):
 WORD_LENGTH = 48
 
 
-def play_morse(string: str, wpm: int = WPM):
+def play_morse(morse: str, wpm: int = WPM):
     p = PyAudio()
 
     stream = p.open(format=paFloat32,
@@ -135,7 +135,7 @@ def play_morse(string: str, wpm: int = WPM):
                     output=True)
 
     unit = 1 / (WORD_LENGTH/60 * wpm)
-    write_audio(stream, string, unit)
+    write_audio(stream, morse, unit)
 
     stream.stop_stream()
     stream.close()
@@ -144,10 +144,8 @@ def play_morse(string: str, wpm: int = WPM):
 
 
 if __name__ == '__main__':
-    '''
-    message = '`bt`'
-    print(generate(message))
-    play_morse(message, 20)
-    '''
+    message = '.-- .... .- -'
+    print(message)
+    play_morse(message, 30)
 
-    print(convert('.... . .-.. .-.. --- --..-- / .-- --- .-. .-.. -.. -.-.--'))
+    print(convert(message))
