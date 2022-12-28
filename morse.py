@@ -121,8 +121,6 @@ def write_audio(stream, morse: str, unit: float, function=None):
         elif letter == '/':
             function(generate_silence(unit))
         function(generate_silence(unit))
-
-
 WORD_LENGTH = 48
 
 
@@ -141,11 +139,3 @@ def play_morse(morse: str, wpm: int = WPM):
     stream.close()
 
     p.terminate()
-
-
-if __name__ == '__main__':
-    message = '.-- .... .- -'
-    print(message)
-    play_morse(message, 30)
-
-    print(convert(message))
